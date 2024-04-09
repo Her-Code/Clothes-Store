@@ -1,48 +1,103 @@
+document.addEventListener("DOMContentLoaded", function () {
+  const url = "https://fakestoreapi.com/products/category/women's%20clothing";
 
-function fetchWomensClothing() {
-    const url = "https://fakestoreapi.com/products/category/women's%20clothing";
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => {
+      const productsContainer = document.getElementById("products-container");
+      const cartIcon = document.getElementById("cart-icon");
+      const cartModal = document.getElementById("cart-modal");
+      const cartContent = document.querySelector(".modal-content");
+      const closeButton = document.querySelector(".close");
 
-    fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch data');
-            }
-            return response.json();
-        })
-        .then(data => {
-            displayWomensClothing(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
+      // Initialize cart items
+      let cartItems = [];
+
+      data.forEach((product) => {
+        const { id, title, image, description, price } = product;
+
+        const productElement = document.createElement("div");
+        productElement.classList.add("product");
+
+        productElement.innerHTML = `
+                    <h2>${title}</h2>
+                    <img src="${image}" alt="${title}" style="max-width: 100px;">
+                    <p class="description">${description}</p>
+                    <p id="price">Price: $${price}</p>
+                    <button class="add-to-cart" data-id="${id}">Add to Cart</button>
+                    <span class="toggle">▼ Show Description</span>
+                    <hr>
+                `;
+
+        productsContainer.appendChild(productElement);
+
+        const addToCartButton = productElement.querySelector(".add-to-cart");
+        addToCartButton.addEventListener("click", function () {
+          const productId = parseInt(addToCartButton.dataset.id);
+          const selectedItem = data.find((item) => item.id === productId);
+
+          if (selectedItem) {
+            cartItems.push(selectedItem);
+            updateCart();
+            closeButton.style.display = "block"; // Show close button when items are added
+            alert("Item added to cart.");
+          }
         });
-}
 
-function displayWomensClothing(products) {
-    const container = document.getElementById('products-container');
+        const toggleButton = productElement.querySelector(".toggle");
+        const descriptionElement = productElement.querySelector(".description");
 
-    if (products) {
-        container.innerHTML = ''; // Clear previous data
-        
-        products.forEach(product => {
-            const productId = product.id;
-            const name = product.title;
-            const imageUrl = product.image;
-            const price = product.price;
-
-            const productElement = document.createElement('div');
-            productElement.classList.add('product');
-            productElement.innerHTML = `
-                <p>Product ID: ${productId}</p>
-                <p>Name: ${name}</p>
-                <p>Price: $${price}</p>
-                <img src="${imageUrl}" alt="${name}" />
-            `;
-            container.appendChild(productElement);
+        toggleButton.addEventListener("click", function () {
+          if (descriptionElement.style.display === "none") {
+            descriptionElement.style.display = "block";
+            toggleButton.textContent = "▲ Hide Description";
+          } else {
+            descriptionElement.style.display = "none";
+            toggleButton.textContent = "▼ Show Description";
+          }
         });
-    } else {
-        container.innerHTML = '<p>No data to display</p>';
-    }
-}
+      });
 
-// Call the fetch function to retrieve and display data
-fetchWomensClothing();
+      // Function to update the cart content
+      function updateCart() {
+        cartContent.innerHTML = "";
+        cartItems.forEach((item) => {
+          const cartItem = document.createElement("div");
+          cartItem.classList.add("cart-item");
+          cartItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.title}" style="max-width: 50px;">
+                        <p>${item.title} - $${item.price}</p>
+                    `;
+          cartItem.addEventListener("click", function () {
+            // Remove the clicked item from the cartItems array
+            cartItems = cartItems.filter((cartItem) => cartItem.id !== item.id);
+            updateCart(); // Update the cart display
+          });
+          cartContent.appendChild(cartItem);
+        });
+      }
+
+      // Toggle cart modal visibility when clicking the cart icon
+      cartIcon.addEventListener("click", function () {
+        cartModal.style.display = "block";
+        closeButton.style.display = "block"; // Show close button when modal is opened
+      });
+
+      // Close cart modal when clicking the close button
+      closeButton.addEventListener("click", function () {
+        cartModal.style.display = "none";
+        closeButton.style.display = "none"; // Hide close button when modal is closed
+      });
+
+      // Close cart modal when clicking outside the modal
+      window.addEventListener("click", function (event) {
+        if (event.target === cartModal) {
+          cartModal.style.display = "none";
+          closeButton.style.display = "none"; // Hide close button when modal is closed
+        }
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
+});
