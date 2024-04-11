@@ -137,6 +137,11 @@ fetch(url)
 
 
 * `Reduce` total if items are deleted and `add` total if items are added.
+### Sections
+* About section -
+            * The name of the store ,where it is located and a brief objective of the store.
+* Contact Us section -
+            * Information on how to reach us incase of a problem and if you want to confirm an order
 
 ### Author
 
