@@ -204,3 +204,10 @@ text-transform: uppercase;
 .Contact #p2{
     color: var(--main-color);
 }
+.buy-now{
+    border-radius: 5px;
+    color: #F0F8FB;
+    background-color: #eb650c;
+    padding: 5px;
+    margin: 5px;
+}
