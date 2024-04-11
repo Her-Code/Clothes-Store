@@ -1,5 +1,5 @@
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const url = "https://fakestoreapi.com/products/category/women's%20clothing";
 
     fetch(url)
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 productsContainer.appendChild(productElement);
 
                 const addToCartButton = productElement.querySelector('.add-to-cart');
-                addToCartButton.addEventListener('click', function() {
+                addToCartButton.addEventListener('click', function () {
                     const productId = parseInt(addToCartButton.dataset.id);
                     if (cartItems[productId]) {
                         cartItems[productId]++;
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const toggleButton = productElement.querySelector('.toggle');
                 const descriptionElement = productElement.querySelector('.description');
 
-                toggleButton.addEventListener('click', function() {
+                toggleButton.addEventListener('click', function () {
                     if (descriptionElement.style.display === 'none') {
                         descriptionElement.style.display = 'block';
                         toggleButton.textContent = '▲ Hide Description';
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <img src="${selectedItem.image}" alt="${selectedItem.title}" style="max-width: 50px;">
                             <p>${selectedItem.title} - $${selectedItem.price} (${quantity})</p>
                         `;
-                        cartItem.addEventListener('click', function() {
+                        cartItem.addEventListener('click', function () {
                             // Decrement the quantity of the clicked item in the cart
                             if (cartItems[productId] > 1) {
                                 cartItems[productId]--;
@@ -96,14 +96,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 const buyNowButton = document.createElement('button');
                 buyNowButton.classList.add('buy-now');
                 buyNowButton.textContent = 'Buy Now';
-                buyNowButton.addEventListener('click', function() {
+                buyNowButton.addEventListener('click', function () {
                     alert('You have bought the items.');
                 });
                 cartContent.appendChild(buyNowButton);
             }
 
             // Toggle cart modal visibility when clicking the cart icon
-            cartIcon.addEventListener('click', function() {
+            cartIcon.addEventListener('click', function () {
                 if (Object.keys(cartItems).length === 0) {
                     alert('Add item!');
                 } else {
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             // Close cart modal when clicking the close button
-            closeButton.addEventListener('click', function() {
+            closeButton.addEventListener('click', function () {
                 cartModal.style.display = 'none';
                 closeButton.style.display = 'none'; // Hide close button when modal is closed
 
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             // Close cart modal when clicking outside the modal
-            window.addEventListener('click', function(event) {
+            window.addEventListener('click', function (event) {
                 if (event.target === cartModal) {
                     cartModal.style.display = 'none';
                     closeButton.style.display = 'none'; // Hide close button when modal is closed
