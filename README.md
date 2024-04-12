@@ -12,7 +12,7 @@ Hey,in this project I am using
 
  ### 2. What I will be doing in this project
 
-- Use Javascript for `DOM maniputation` and addEventListeners.
+- Use Javascript for `DOM manipulation` and addEventListeners.
 - Fetch and display the data in the `API`
 - Create an `HTML file` to show structure of the data.
 - Create a `CSS file` and add styles to beautify the appearance of the data.
@@ -48,7 +48,7 @@ I used **Postman**
   <script src="index.js"></script> in the body tag
   ```
 
-* Fetch Api using `Get`,this is a method`CRUD` that is used in database creation and create html elements to house them for good display.
+* Fetch Api using `Get`, this is a method `CRUD` that is used in database creation and create a html elements to house them for good display.
 ```JavaScript
 fetch(url)
         .then(response => response.json())
@@ -145,4 +145,4 @@ fetch(url)
 
 ### Author
 
-[@Her-Code] ('https://github.com/Her-Code') - Sharon Kahira
+[@Her-Code](https://github.com/Her-Code) - Sharon Kahira
